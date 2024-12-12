@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
 
   newRegistration() {
     this.new = {
-      id: null,
+      id: undefined,
       teamLeader: '',
       teamName: '',
       teamLeaderBirthDate: '',
