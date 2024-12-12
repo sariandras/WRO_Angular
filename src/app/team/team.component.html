@@ -1,40 +1,3 @@
-<div class="container">
-  <h1 class="text-center mb-3">WRO csapat regisztráció</h1>
-  <table class="table table-hover table-bordered">
-    <tbody>
-    <tr class="text-center">
-      <th>
-        <span data-bs-toggle="modal" data-bs-target="#exampleModal"
-        (click)="newRegistration()"
-          >&#10010;</span
-        >
-      </th>
-      <th>Csapatnév</th>
-      <th>Kategória</th>
-      <th>Csapattagok száma</th>
-      <th>Csapatvezető neve</th>
-      <th>Csap. vez. e-mail</th>
-      <th>Csap. vez. szüldátum</th>
-    </tr>
-    @for (reg of registrations; track $index) {
-      <tr>
-        <td>
-          <span (click)="doModify(reg)">&#9998;</span>
-          <span (click)="doDelete(reg)">&#10008;</span>
-        </td>
-        <td>{{reg.teamName}}</td>
-        <td>{{reg.category}}</td>
-        <td>{{reg.memberCount}}</td>
-        <td>{{reg.teamLeader}}</td>
-        <td>{{reg.teamLeaderEmail}}</td>
-        <td>{{reg.teamLeaderBirthDate}}</td>
-      </tr>
-
-    }
-    </tbody>
-  </table>
-</div>
-
 <div
   class="modal fade"
   id="exampleModal"
@@ -57,11 +20,22 @@
         <form>
           <div class="mb-3">
             <label for="teamName" class="form-label">Csapatnév</label>
-            <input type="text" class="form-control" id="teamName" />
+            <input
+              type="text"
+              class="form-control"
+              id="teamName"
+              [value]="teamData?.teamName"
+              (input)="teamData!.teamName = getValue($event)"
+            />
           </div>
           <div class="mb-3">
             <label for="category" class="form-label">Kategória</label>
-            <select class="form-select" id="category">
+            <select
+              class="form-select"
+              id="category"
+              [value]="teamData?.category"
+              (input)="teamData!.category = getValue($event)"
+            >
               <option selected>Válassz...</option>
               <option value="Robomission Elementary">
                 Robomission Elementary
@@ -83,34 +57,59 @@
               id="teamMembers"
               min="2"
               max="3"
+              [value]="teamData?.memberCount"
+              (input)="teamData!.memberCount = getValue($event)"
             />
           </div>
           <div class="mb-3">
             <label for="teamLeader" class="form-label">Csapatvezető neve</label>
-            <input type="text" class="form-control" id="teamLeader" />
+            <input
+              type="text"
+              class="form-control"
+              id="teamLeader"
+              [value]="teamData?.teamLeader"
+              (input)="teamData!.teamLeader = getValue($event)"
+            />
           </div>
           <div class="mb-3">
             <label for="teamLeaderEmail" class="form-label"
               >Csapatvezető e-mail címe</label
             >
-            <input type="email" class="form-control" id="teamLeaderEmail" />
+            <input
+              type="email"
+              class="form-control"
+              id="teamLeaderEmail"
+              [value]="teamData?.teamLeaderEmail"
+              (input)="teamData!.teamLeaderEmail = getValue($event)"
+            />
           </div>
           <div class="mb-3">
             <label for="teamLeaderBirth" class="form-label"
               >Csapatvezető születési dátuma</label
             >
-            <input type="date" class="form-control" id="teamLeaderBirth" />
+            <input
+              type="date"
+              class="form-control"
+              id="teamLeaderBirth"
+              [value]="teamData?.teamLeaderBirthDate"
+              (input)="teamData!.teamLeaderBirthDate = getValue($event)"
+            />
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+        <button
+          type="button"
+          class="btn btn-danger"
+          data-bs-dismiss="modal"
+          (click)="cancel()"
+        >
           Mégsem
         </button>
-        <button type="button" class="btn btn-success">Mentés</button>
+        <button type="button" class="btn btn-success" (click)="save()">
+          Mentés
+        </button>
       </div>
     </div>
   </div>
 </div>
-
-<app-team [teamData]="new==undefined ? modify : new" (saved)="save($event)" (cancelled)="new = undefined;modify=undefined;"></app-team>
